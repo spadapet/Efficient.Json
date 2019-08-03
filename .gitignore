@@ -1,0 +1,9 @@
+﻿/out/
+/packages/
+
+.vs/
+bin/
+obj/
+
+*.user
+launchSettings.json

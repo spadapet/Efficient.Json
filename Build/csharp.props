@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project  ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="..\shared.props" />
+
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+
+        <ConfigOutRoot>$(OutRoot)$(Configuration).$(Platform)\</ConfigOutRoot>
+        <ProjectOutRoot>$(ConfigOutRoot)$(MSBuildProjectName)\</ProjectOutRoot>
+        <BaseIntermediateOutputPath>$(ProjectOutRoot)</BaseIntermediateOutputPath>
+        <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
+        <BaseOutputPath>$(ConfigOutRoot)bin\</BaseOutputPath>
+        <BaseOutputPath Condition="$(MSBuildProjectName.EndsWith('.Tests'))">$(ConfigOutRoot)bin.tests\</BaseOutputPath>
+        <OutputPath>$(BaseOutputPath)</OutputPath>
+        <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <DebugType>full</DebugType>
+        <DebugSymbols>true</DebugSymbols>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(BuildNoSign)' == '' ">
+        <DelaySign>true</DelaySign>
+        <SignAssembly>true</SignAssembly>
+        <AssemblyOriginatorKeyFile>$(DevRoot)Build\publickey.snk</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(BuildNoSign)' == '' And '$(BuildPfxFile)' != '' And Exists('$(BuildPfxFile)') ">
+        <DelaySign>false</DelaySign>
+        <AssemblyOriginatorKeyFile>$(BuildPfxFile)</AssemblyOriginatorKeyFile>
+    </PropertyGroup>
+
+</Project>

@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29201.157
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efficient.Json", "Efficient.Json\Efficient.Json.csproj", "{56678FE1-5E9E-487F-8060-DA1A67842C15}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Efficient.Json.Tests", "Efficient.Json.Tests\Efficient.Json.Tests.csproj", "{2879DCA1-FB7F-47FA-AA35-3C6DF70E3E03}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Files", "Files", "{6A164454-5DE5-42B9-9294-6034BE628AED}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Build\csharp.props = Build\csharp.props
+		README.md = README.md
+		shared.props = shared.props
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{56678FE1-5E9E-487F-8060-DA1A67842C15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56678FE1-5E9E-487F-8060-DA1A67842C15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56678FE1-5E9E-487F-8060-DA1A67842C15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56678FE1-5E9E-487F-8060-DA1A67842C15}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2879DCA1-FB7F-47FA-AA35-3C6DF70E3E03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2879DCA1-FB7F-47FA-AA35-3C6DF70E3E03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2879DCA1-FB7F-47FA-AA35-3C6DF70E3E03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2879DCA1-FB7F-47FA-AA35-3C6DF70E3E03}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {18D691B0-6EBB-4909-B801-0461625ABEC2}
+	EndGlobalSection
+EndGlobal
