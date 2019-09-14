@@ -204,7 +204,7 @@ namespace Efficient.Json.Tests
         {
             this.ReadFileTestPerf(
                 ParsePerfTests.LargeFileName,
-                JsonValue.Parse,
+                JsonValue.StringToValue,
                 ParsePerfTests.GetDeepHashCode);
         }
 
@@ -213,7 +213,7 @@ namespace Efficient.Json.Tests
         {
             this.ReadFileTestPerf(
                 ParsePerfTests.LargeFileName,
-                s => JsonValue.Parse(new StringReader(s)),
+                s => JsonValue.StringToValue(new StringReader(s)),
                 ParsePerfTests.GetDeepHashCode);
         }
 
@@ -240,7 +240,13 @@ namespace Efficient.Json.Tests
         {
             this.StreamFileTestPerf(
                 ParsePerfTests.LargeFileName,
-                s => JsonValue.Parse(s),
+                s =>
+                {
+                    using (StreamReader reader = new StreamReader(s, detectEncodingFromByteOrderMarks: true))
+                    {
+                        return JsonValue.StringToValue(reader);
+                    }
+                },
                 v => ParsePerfTests.GetDeepHashCode(v));
         }
 

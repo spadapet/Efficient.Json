@@ -8,7 +8,7 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Peter Spada</Authors>
     <Company></Company>
-    <Description>Fast and efficient JSON parser</Description>
+    <Description>Fast and efficient JSON parser, serializer, and deserializer.</Description>
     <Copyright>Copyright 2019</Copyright>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/spadapet/Efficient.Json</PackageProjectUrl>
@@ -16,7 +16,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>JSON</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
-    <Version>1.1.0</Version>
+    <Version>1.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

@@ -81,7 +81,7 @@ namespace Efficient.Json.Tests
             cult.Followers.Add(new Person("Person 1", DateTime.Parse("2/1/2002")));
             cult.Followers.Add(new Person("Person 2", DateTime.Parse("4/3/2003")));
 
-            string text = JsonValue.Serialize(cult, formatted: false);
+            string text = JsonValue.ObjectToString(cult, formatted: false);
             Assert.Equal(@"{""Name"":""Funny cult"",""Active"":true,""EndDate"":""10/11/2012 00:00:00"",""Leader"":{""born"":""01/02/2003 00:00:00"",""name"":""Leader Person""},""Followers"":[{""born"":""02/01/2002 00:00:00"",""name"":""Person 1""},{""born"":""04/03/2003 00:00:00"",""name"":""Person 2""}]}", text);
         }
 

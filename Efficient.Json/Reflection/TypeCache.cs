@@ -37,7 +37,7 @@ namespace Efficient.Json.Reflection
                 {
                     if (typeInfo.IsArray)
                     {
-                        initialCapacity = (initialCapacity > 0) ? initialCapacity : Constants.ArrayDeserializeBufferSize;
+                        initialCapacity = (initialCapacity > 0) ? initialCapacity : Constants.BufferSize;
                     }
 
                     return capacityConstructor(initialCapacity);

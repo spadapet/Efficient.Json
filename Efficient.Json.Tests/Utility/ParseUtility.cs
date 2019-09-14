@@ -7,27 +7,21 @@ namespace Efficient.Json.Tests.Utility
     {
         public static JsonValue ParseAndValidate(string text)
         {
-            JsonValue value = JsonValue.Parse(text);
-            return ParseUtility.ValidateParse(value);
-        }
-
-        public static JsonValue ParseAndValidate(Stream stream)
-        {
-            JsonValue value = JsonValue.Parse(stream);
+            JsonValue value = JsonValue.StringToValue(text);
             return ParseUtility.ValidateParse(value);
         }
 
         public static JsonValue ParseAndValidate(TextReader reader)
         {
-            JsonValue value = JsonValue.Parse(reader);
+            JsonValue value = JsonValue.StringToValue(reader);
             return ParseUtility.ValidateParse(value);
         }
 
         public static string SerializeAndValidate(object value, bool formatted = false)
         {
-            string text = JsonValue.Serialize(value, formatted);
-            object value2 = JsonValue.Deserialize(text, value?.GetType() ?? typeof(object));
-            string text2 = JsonValue.Serialize(value2, formatted);
+            string text = JsonValue.ObjectToString(value, formatted);
+            object value2 = JsonValue.StringToObject(text, value?.GetType() ?? typeof(object));
+            string text2 = JsonValue.ObjectToString(value2, formatted);
             Assert.Equal(text, text2);
 
             return text;
@@ -38,7 +32,7 @@ namespace Efficient.Json.Tests.Utility
             for (int i = 0; i < 2; i++)
             {
                 string newText1 = value.ToString(formatted: i == 1);
-                JsonValue newValue = JsonValue.Parse(newText1);
+                JsonValue newValue = JsonValue.StringToValue(newText1);
 
                 string newText2 = newValue.ToString(formatted: i == 1);
                 Assert.Equal(newText1, newText2);

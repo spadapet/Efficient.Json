@@ -3,9 +3,10 @@
     internal static class Constants
     {
         public const int BufferSize = 32;
-        public const int ArrayDeserializeBufferSize = 32;
 
-        internal static object TrueObject = true;
-        internal static object FalseObject = false;
+        public static object TrueObject = true;
+        public static object FalseObject = false;
+
+        public static string GetIndent(bool formatted) => formatted ? "    " : string.Empty;
     }
 }

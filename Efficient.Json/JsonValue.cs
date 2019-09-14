@@ -153,24 +153,6 @@ namespace Efficient.Json
             }
         }
 
-        public string ToString(bool formatted)
-        {
-            using (StringWriter writer = new StringWriter(CultureInfo.InvariantCulture))
-            {
-                this.ToString(writer, formatted);
-                return writer.ToString();
-            }
-        }
-
-        public static string Serialize(object value, bool formatted)
-        {
-            using (StringWriter writer = new StringWriter(CultureInfo.InvariantCulture))
-            {
-                JsonValue.Serialize(value, writer, formatted);
-                return writer.ToString();
-            }
-        }
-
         IEnumerator IEnumerable.GetEnumerator()
         {
             IEnumerator enumerator;
@@ -204,54 +186,128 @@ namespace Efficient.Json
         JsonValue IReadOnlyDictionary<string, JsonValue>.this[string key] => this.List.Dictionary[key];
         JsonValue IReadOnlyList<JsonValue>.this[int index] => this.List.Array[index];
 
+        ////////////////////////////////////////
+        // ValueToString
+
         public override string ToString() => this.ToString(formatted: false);
-        public void ToString(Stream stream, bool formatted) => TextSerializer.Serialize(new ParsedItemizer(this), JsonValue.GetIndent(formatted), stream);
-        public void ToString(TextWriter writer, bool formatted) => TextSerializer.Serialize(new ParsedItemizer(this), JsonValue.GetIndent(formatted), writer);
 
-        private static string GetIndent(bool formatted) => formatted ? "    " : string.Empty;
-        public static void Serialize(object value, Stream stream, bool formatted) => TextSerializer.Serialize(new ObjectItemizer(value), JsonValue.GetIndent(formatted), stream);
-        public static void Serialize(object value, TextWriter writer, bool formatted) => TextSerializer.Serialize(new ObjectItemizer(value), JsonValue.GetIndent(formatted), writer);
-        public static JsonValue Serialize(object value) => ObjectParser.Parse(value);
-
-        public T Deserialize<T>() => (T)this.Deserialize(typeof(T));
-        public object Deserialize(Type type) => Deserializer.Deserialize(new ParsedItemizer(this), null, type);
-        public void DeserializeInto(object instance) => Deserializer.Deserialize(new ParsedItemizer(this), instance, null);
-
-        public static JsonValue Parse(string text) => StringParser.Parse(text);
-        public static T Deserialize<T>(string text) => (T)JsonValue.Deserialize(text, typeof(T));
-        public static object Deserialize(string text, Type type) => Deserializer.Deserialize(new TokenItemizer(new StringTokenizer(text)), null, type);
-        public static void DeserializeInto(string text, object instance) => Deserializer.Deserialize(new TokenItemizer(new StringTokenizer(text)), instance, null);
-
-        public static JsonValue Parse(TextReader reader) => StreamParser.Parse(reader);
-        public static T Deserialize<T>(TextReader reader) => (T)JsonValue.Deserialize(reader, typeof(T));
-        public static object Deserialize(TextReader reader, Type type) => Deserializer.Deserialize(new TokenItemizer(new StreamTokenizer(reader)), null, type);
-        public static void DeserializeInto(TextReader reader, object instance) => Deserializer.Deserialize(new TokenItemizer(new StreamTokenizer(reader)), instance, null);
-
-        public static JsonValue Parse(Stream stream) => StreamParser.Parse(stream);
-        public static T Deserialize<T>(Stream stream) => (T)JsonValue.Deserialize(stream, typeof(T));
-
-        public static object Deserialize(Stream stream, Type type)
+        public string ToString(bool formatted)
         {
-            using (TextReader reader = new StreamReader(stream, detectEncodingFromByteOrderMarks: true))
+            using (StringWriter writer = new StringWriter(CultureInfo.InvariantCulture))
             {
-                return Deserializer.Deserialize(new TokenItemizer(new StreamTokenizer(reader)), null, type);
+                this.ToString(writer, formatted);
+                return writer.ToString();
             }
         }
 
-        public static void DeserializeInto(Stream stream, object instance)
+        public void ToString(TextWriter writer, bool formatted) => JsonException.Wrap(() =>
         {
-            using (TextReader reader = new StreamReader(stream, detectEncodingFromByteOrderMarks: true))
+            TextSerializer.Serialize(new ParsedItemizer(this), Constants.GetIndent(formatted), writer);
+        });
+
+        ////////////////////////////////////////
+        // ValueToObject
+
+        public T ToObject<T>() => (T)this.ToObject(typeof(T));
+
+        public object ToObject(Type type) => JsonException.Wrap(() =>
+        {
+            return Deserializer.Deserialize(new ParsedItemizer(this), null, type);
+        });
+
+        public void IntoObject(object instance) => JsonException.Wrap(() =>
+        {
+            Deserializer.Deserialize(new ParsedItemizer(this), instance, null);
+        });
+
+        ////////////////////////////////////////
+        // StringToString
+
+        public static string StringToString(string text, bool formatted) => JsonException.Wrap(() =>
+        {
+            using (StringWriter writer = new StringWriter(CultureInfo.InvariantCulture))
             {
-                Deserializer.Deserialize(new TokenItemizer(new StreamTokenizer(reader)), instance, null);
+                TextSerializer.Serialize(new TokenItemizer(new StringTokenizer(text)), Constants.GetIndent(formatted), writer);
+                return writer.ToString();
+            }
+        });
+
+        public static void StringToString(TextReader reader, TextWriter writer, bool formatted) => JsonException.Wrap(() =>
+        {
+            TextSerializer.Serialize(new TokenItemizer(new StreamTokenizer(reader)), Constants.GetIndent(formatted), writer);
+        });
+
+        ////////////////////////////////////////
+        // StringToValue
+
+        public static JsonValue StringToValue(string text) => JsonException.Wrap(() =>
+        {
+            return StringParser.Parse(text);
+        });
+
+        public static JsonValue StringToValue(TextReader reader) => JsonException.Wrap(() =>
+        {
+            return StreamParser.Parse(reader);
+        });
+
+        ////////////////////////////////////////
+        // StringToObject
+
+        public static T StringToObject<T>(string text) => (T)JsonValue.StringToObject(text, typeof(T));
+
+        public static object StringToObject(string text, Type type) => JsonException.Wrap(() =>
+        {
+            return Deserializer.Deserialize(new TokenItemizer(new StringTokenizer(text)), null, type);
+        });
+
+        public static T StringToObject<T>(TextReader reader) => (T)JsonValue.StringToObject(reader, typeof(T));
+
+        public static object StringToObject(TextReader reader, Type type) => JsonException.Wrap(() =>
+        {
+            return Deserializer.Deserialize(new TokenItemizer(new StreamTokenizer(reader)), null, type);
+        });
+
+        public static void StringIntoObject(string text, object instance) => JsonException.Wrap(() =>
+        {
+            Deserializer.Deserialize(new TokenItemizer(new StringTokenizer(text)), instance, null);
+        });
+
+        public static void StringIntoObject(TextReader reader, object instance) => JsonException.Wrap(() =>
+        {
+            Deserializer.Deserialize(new TokenItemizer(new StreamTokenizer(reader)), instance, null);
+        });
+
+        ////////////////////////////////////////
+        // ObjectToString
+
+        public static string ObjectToString(object value, bool formatted)
+        {
+            using (StringWriter writer = new StringWriter(CultureInfo.InvariantCulture))
+            {
+                JsonValue.ObjectToString(value, writer, formatted);
+                return writer.ToString();
             }
         }
 
-        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter)
+        public static void ObjectToString(object value, TextWriter writer, bool formatted) => JsonException.Wrap(() =>
         {
-            return new ValueDynamic(this, parameter);
-        }
+            TextSerializer.Serialize(new ObjectItemizer(value), Constants.GetIndent(formatted), writer);
+        });
 
-        object IValueDynamic.Convert(Type type) => this.Deserialize(type);
+        ////////////////////////////////////////
+        // ObjectToValue
+
+        public static JsonValue ObjectToValue(object value) => JsonException.Wrap(() =>
+        {
+            return ObjectParser.Parse(value);
+        });
+
+        ////////////////////////////////////////
+        // Dynamic
+
+        DynamicMetaObject IDynamicMetaObjectProvider.GetMetaObject(Expression parameter) => new ValueDynamic(this, parameter);
+
+        object IValueDynamic.Convert(Type type) => this.ToObject(type);
 
         object IValueDynamic.GetIndex(object[] indexes)
         {

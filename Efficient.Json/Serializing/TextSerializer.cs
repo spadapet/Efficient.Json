@@ -9,14 +9,6 @@ namespace Efficient.Json.Serializing
 {
     internal class TextSerializer
     {
-        public static void Serialize(Itemizer itemizer, string indent, Stream stream)
-        {
-            using (StreamWriter writer = new StreamWriter(stream))
-            {
-                TextSerializer.Serialize(itemizer, indent, writer);
-            }
-        }
-
         public static void Serialize(Itemizer itemizer, string indent, TextWriter writer)
         {
             TextSerializer serializer = new TextSerializer(itemizer, indent, writer);

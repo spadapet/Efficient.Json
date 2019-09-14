@@ -32,7 +32,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertDictToObject()
         {
-            List<object> person = JsonValue.Deserialize<object>(@"{ ""name"": ""Person Last"", ""age"": 32 }") as List<object>;
+            List<object> person = JsonValue.StringToObject<object>(@"{ ""name"": ""Person Last"", ""age"": 32 }") as List<object>;
             Assert.NotNull(person);
 
             IEnumerable<object> expected = new object[] { KeyValuePair.Create<string, object>("name", "Person Last"), KeyValuePair.Create<string, object>("age", (decimal)32) };
@@ -43,7 +43,7 @@ namespace Efficient.Json.Tests
         public void ConvertArrayToObject()
         {
             string text = @"[""first"", 2, null, true]";
-            List<object> stuff = JsonValue.Deserialize<object>(text) as List<object>;
+            List<object> stuff = JsonValue.StringToObject<object>(text) as List<object>;
             Assert.NotNull(stuff);
 
             IEnumerable<object> expected = new object[] { "first", (decimal)2, null, true };
@@ -54,7 +54,7 @@ namespace Efficient.Json.Tests
         public void ConvertArrayToKeyValuePairs()
         {
             string text = @"[""first"", 2, null, true]";
-            List<KeyValuePair<string, object>> stuff = JsonValue.Deserialize<List<KeyValuePair<string, object>>>(text);
+            List<KeyValuePair<string, object>> stuff = JsonValue.StringToObject<List<KeyValuePair<string, object>>>(text);
             Assert.NotNull(stuff);
 
             IEnumerable<KeyValuePair<string, object>> expected = new KeyValuePair<string, object>[]
@@ -72,7 +72,7 @@ namespace Efficient.Json.Tests
         public void ConvertArrayToDict()
         {
             string text = @"[""first"", 2, null, true]";
-            Dictionary<int, object> stuff = JsonValue.Deserialize<Dictionary<int, object>>(text);
+            Dictionary<int, object> stuff = JsonValue.StringToObject<Dictionary<int, object>>(text);
             Assert.NotNull(stuff);
 
             IEnumerable<KeyValuePair<int, object>> expected = new KeyValuePair<int, object>[]
@@ -89,7 +89,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertSimpleStruct()
         {
-            Person person = JsonValue.Deserialize<Person>(@"{ ""name"": ""Person Last"", ""born"": ""1/2/1979"", ""Tag"": ""tagged"" }");
+            Person person = JsonValue.StringToObject<Person>(@"{ ""name"": ""Person Last"", ""born"": ""1/2/1979"", ""Tag"": ""tagged"" }");
             Assert.Equal(new Person("Person Last", DateTime.Parse("1/2/1979")), person);
             Assert.Equal("tagged", person.Tag);
         }
@@ -97,7 +97,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertSimpleNested()
         {
-            Cult cult = JsonValue.Deserialize<Cult>(
+            Cult cult = JsonValue.StringToObject<Cult>(
 @"{
     'Name': 'Amazing Test Cult',
     'Active': true,
@@ -114,7 +114,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertInterface()
         {
-            CultWrapper cultWrapper = JsonValue.Deserialize<CultWrapper>(
+            CultWrapper cultWrapper = JsonValue.StringToObject<CultWrapper>(
 @"{ 'Cult': {
     'Name': 'Amazing Test Cult',
     'Active': true,
@@ -129,7 +129,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertDictionary()
         {
-            Dictionary<string, DateTime> dict = JsonValue.Deserialize<Dictionary<string, DateTime>>(@"{ ""born1"": ""1/2/1979"", ""born2"": ""3/4/1981"" }");
+            Dictionary<string, DateTime> dict = JsonValue.StringToObject<Dictionary<string, DateTime>>(@"{ ""born1"": ""1/2/1979"", ""born2"": ""3/4/1981"" }");
             Assert.Equal(DateTime.Parse("1/2/1979"), dict["born1"]);
             Assert.Equal(DateTime.Parse("3/4/1981"), dict["born2"]);
         }
@@ -137,7 +137,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertIDictionary()
         {
-            IDictionary dict = JsonValue.Deserialize<IDictionary>(@"{ ""born1"": ""1/2/1979"", ""born2"": ""3/4/1981"" }");
+            IDictionary dict = JsonValue.StringToObject<IDictionary>(@"{ ""born1"": ""1/2/1979"", ""born2"": ""3/4/1981"" }");
             Assert.Equal("1/2/1979", dict["born1"]);
             Assert.Equal("3/4/1981", dict["born2"]);
         }
@@ -145,7 +145,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertIDictionaryT()
         {
-            IDictionary<string, DateTime> dict = JsonValue.Deserialize<IDictionary<string, DateTime>>(@"{ ""born1"": ""1/2/1979"", ""born2"": ""3/4/1981"" }");
+            IDictionary<string, DateTime> dict = JsonValue.StringToObject<IDictionary<string, DateTime>>(@"{ ""born1"": ""1/2/1979"", ""born2"": ""3/4/1981"" }");
             Assert.Equal(DateTime.Parse("1/2/1979"), dict["born1"]);
             Assert.Equal(DateTime.Parse("3/4/1981"), dict["born2"]);
         }
@@ -154,8 +154,8 @@ namespace Efficient.Json.Tests
         public void ConvertArrayIntermediate1()
         {
             JsonValue value = ParseUtility.ParseAndValidate(@"[ 1, 2, 3, 4 ]");
-            int[] ints = value.Deserialize<int[]>();
-            object[] objects = value.Deserialize<object[]>();
+            int[] ints = value.ToObject<int[]>();
+            object[] objects = value.ToObject<object[]>();
 
             Assert.Equal(4, objects.Length);
             Assert.Equal(4, ints.Length);
@@ -166,7 +166,7 @@ namespace Efficient.Json.Tests
         public void ConvertArrayIntermediate2()
         {
             JsonValue value = ParseUtility.ParseAndValidate(@"[ [ 2, 4, 6, 8 ], [ 1, 3, 5 ] ]");
-            int[][] ints = value.Deserialize<int[][]>();
+            int[][] ints = value.ToObject<int[][]>();
 
             Assert.Equal(2, ints.Length);
             Assert.Equal(new int[][] { new int[] { 2, 4, 6, 8 }, new int[] { 1, 3, 5 } }, ints);
@@ -176,10 +176,10 @@ namespace Efficient.Json.Tests
         public void ConvertArrayDirect1()
         {
             const string json = @"[ 1, 2, 3, 4 ]";
-            int[] ints = JsonValue.Deserialize<int[]>(json);
-            object[] objects = JsonValue.Deserialize<object[]>(json);
-            IList<double> ilistDoubles = JsonValue.Deserialize<IList<double>>(json);
-            List<string> listStrings = JsonValue.Deserialize<List<string>>(json);
+            int[] ints = JsonValue.StringToObject<int[]>(json);
+            object[] objects = JsonValue.StringToObject<object[]>(json);
+            IList<double> ilistDoubles = JsonValue.StringToObject<IList<double>>(json);
+            List<string> listStrings = JsonValue.StringToObject<List<string>>(json);
 
             Assert.Equal(4, ints.Length);
             Assert.Equal(4, objects.Length);
@@ -194,7 +194,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertArrayDirect2()
         {
-            int[][] ints = JsonValue.Deserialize<int[][]>(@"[ [ 2, 4, 6, 8 ], [ 1, 3, 5 ] ]");
+            int[][] ints = JsonValue.StringToObject<int[][]>(@"[ [ 2, 4, 6, 8 ], [ 1, 3, 5 ] ]");
 
             Assert.Equal(2, ints.Length);
             Assert.Equal(new int[][] { new int[] { 2, 4, 6, 8 }, new int[] { 1, 3, 5 } }, ints);
@@ -203,11 +203,11 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertToNullable()
         {
-            Cult cult1 = JsonValue.Deserialize<Cult>(@"{ ""EndDate"": ""1/2/1979"" }");
-            Cult cult2 = JsonValue.Deserialize<Cult>(@"{ ""EndDate"": null }");
-            Cult cult3 = JsonValue.Deserialize<Cult>(@"{ }");
-            Cult cult4 = JsonValue.Deserialize<Cult>(@"{ ""EndDate"": ""1/2/1979"", ""EndDate"": ""2/1/1979"" }");
-            Cult cult5 = JsonValue.Deserialize<Cult>(@"{ ""EndDate"": null, ""EndDate"": ""2/1/1979"" }");
+            Cult cult1 = JsonValue.StringToObject<Cult>(@"{ ""EndDate"": ""1/2/1979"" }");
+            Cult cult2 = JsonValue.StringToObject<Cult>(@"{ ""EndDate"": null }");
+            Cult cult3 = JsonValue.StringToObject<Cult>(@"{ }");
+            Cult cult4 = JsonValue.StringToObject<Cult>(@"{ ""EndDate"": ""1/2/1979"", ""EndDate"": ""2/1/1979"" }");
+            Cult cult5 = JsonValue.StringToObject<Cult>(@"{ ""EndDate"": null, ""EndDate"": ""2/1/1979"" }");
 
             Assert.True(cult1.EndDate.HasValue);
             Assert.False(cult2.EndDate.HasValue);
@@ -222,7 +222,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertToArrayOfNullable()
         {
-            TestStuff stuff = JsonValue.Deserialize<TestStuff>(@"{ ""NullableIntsField"": [ 1, 2, 3, 4 ], ""NullableIntsProperty"": [ 5, 6, 7, 8 ] }");
+            TestStuff stuff = JsonValue.StringToObject<TestStuff>(@"{ ""NullableIntsField"": [ 1, 2, 3, 4 ], ""NullableIntsProperty"": [ 5, 6, 7, 8 ] }");
 
             Assert.NotNull(stuff.NullableIntsField);
             Assert.NotNull(stuff.NullableIntsProperty);
@@ -233,7 +233,7 @@ namespace Efficient.Json.Tests
         [Fact]
         public void ConvertToCult()
         {
-            Cult cult = JsonValue.Deserialize<Cult>(
+            Cult cult = JsonValue.StringToObject<Cult>(
 @"{
     'Name': 'Amazing Test Cult',
     'Active': true,

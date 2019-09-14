@@ -39,11 +39,11 @@ namespace Efficient.Json.Tests
                 using (StreamReader reader = new StreamReader(DeserializePerfTests.LargeFileName, detectEncodingFromByteOrderMarks: true))
                 {
                     Stopwatch innerTimer = Stopwatch.StartNew();
-                    JsonValue value = JsonValue.Parse(reader);
+                    JsonValue value = JsonValue.StringToValue(reader);
                     parseTime += innerTimer.ElapsedMilliseconds;
                     innerTimer.Restart();
 
-                    BabyNames names = value.Deserialize<BabyNames>();
+                    BabyNames names = value.ToObject<BabyNames>();
                     convertTime += innerTimer.ElapsedMilliseconds;
 
                     GC.KeepAlive(value);
@@ -69,11 +69,11 @@ namespace Efficient.Json.Tests
             for (int i = 0; i < 4; i++)
             {
                 Stopwatch innerTimer = Stopwatch.StartNew();
-                JsonValue value = JsonValue.Parse(json);
+                JsonValue value = JsonValue.StringToValue(json);
                 parseTime += innerTimer.ElapsedMilliseconds;
                 innerTimer.Restart();
 
-                BabyNames names = value.Deserialize<BabyNames>();
+                BabyNames names = value.ToObject<BabyNames>();
                 convertTime += innerTimer.ElapsedMilliseconds;
 
                 GC.KeepAlive(value);
@@ -155,7 +155,7 @@ namespace Efficient.Json.Tests
             {
                 using (StreamReader reader = new StreamReader(DeserializePerfTests.LargeFileName, detectEncodingFromByteOrderMarks: true))
                 {
-                    BabyNames names = JsonValue.Deserialize<BabyNames>(reader);
+                    BabyNames names = JsonValue.StringToObject<BabyNames>(reader);
                     GC.KeepAlive(names);
                 }
 

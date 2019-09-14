@@ -1,7 +1,7 @@
 ﻿namespace Efficient.Json
 {
     /// <summary>
-    /// Global data about a parsed JSON document
+    /// Info about a parsed JSON document
     /// </summary>
     internal class JsonContext
     {

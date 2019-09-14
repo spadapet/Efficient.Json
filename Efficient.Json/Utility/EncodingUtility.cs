@@ -253,7 +253,7 @@ namespace Efficient.Json.Utility
 
             if (cur == -1)
             {
-                throw new JsonException(Resources.Parser_InvalidStringToken);
+                throw JsonException.New(Resources.Parser_InvalidStringToken);
             }
 
             return new Key(value.ToString(), hasher.HashValue);

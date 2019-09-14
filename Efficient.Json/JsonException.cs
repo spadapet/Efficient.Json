@@ -31,7 +31,7 @@ namespace Efficient.Json
         }
 
         internal JsonException(FullToken token, string message, Exception innerException = null)
-            : base(message, innerException)
+            : base(message ?? innerException?.Message ?? string.Empty, innerException)
         {
             this.Token = token;
         }
@@ -44,6 +44,38 @@ namespace Efficient.Json
         internal static JsonException WrongType(object actualType, object expectedType)
         {
             return new JsonException(string.Format(CultureInfo.CurrentCulture, Resources.Value_WrongType, actualType.ToString(), expectedType.ToString()));
+        }
+
+        internal static void Wrap(Action action)
+        {
+            try
+            {
+                action();
+            }
+            catch (JsonException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new JsonException(null, ex);
+            }
+        }
+
+        internal static T Wrap<T>(Func<T> action)
+        {
+            try
+            {
+                return action();
+            }
+            catch (JsonException)
+            {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                throw new JsonException(null, ex);
+            }
         }
     }
 }

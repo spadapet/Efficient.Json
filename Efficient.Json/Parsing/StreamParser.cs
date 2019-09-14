@@ -9,14 +9,6 @@ namespace Efficient.Json.Parsing
     /// </summary>
     internal sealed class StreamParser : ItemParser
     {
-        public static JsonValue Parse(Stream stream)
-        {
-            using (StreamReader reader = new StreamReader(stream, detectEncodingFromByteOrderMarks: true))
-            {
-                return StreamParser.Parse(reader);
-            }
-        }
-
         public static JsonValue Parse(TextReader reader)
         {
             StreamParser parser = new StreamParser(reader);
