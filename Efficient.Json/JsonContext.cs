@@ -1,4 +1,6 @@
-﻿namespace Efficient.Json
+﻿using Efficient.Json.Path;
+
+namespace Efficient.Json
 {
     /// <summary>
     /// Info about a parsed JSON document
@@ -11,6 +13,11 @@
         public JsonContext(string text)
         {
             this.Text = text;
+        }
+
+        public Query GetQuery(string path)
+        {
+            return new Query(path);
         }
     }
 }

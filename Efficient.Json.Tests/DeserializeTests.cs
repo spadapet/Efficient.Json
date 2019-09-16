@@ -26,7 +26,8 @@ namespace Efficient.Json.Tests
         {
             DateTime date = new DateTime(1970, 7, 4, 12, 0, 30, 500, DateTimeKind.Local);
             dynamic value = ParseUtility.ParseAndValidate($@"{{ ""date"": ""Foo{date.ToString("O", CultureInfo.InvariantCulture)}"" }}");
-            Assert.Throws<FormatException>(() => (DateTime)value.date);
+            JsonException ex = Assert.Throws<JsonException>(() => (DateTime)value.date);
+            Assert.IsType<FormatException>(ex.InnerException);
         }
 
         [Fact]

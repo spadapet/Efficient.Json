@@ -31,7 +31,7 @@ namespace Efficient.Json.Tokenizing
             return this.curChar = this.Read();
         }
 
-        protected static bool IsHexDigit(char ch)
+        public static bool IsHexDigit(char ch)
         {
             if (ch >= '0' && ch <= '9')
             {
@@ -42,7 +42,7 @@ namespace Efficient.Json.Tokenizing
             return ch >= 'a' && ch <= 'f';
         }
 
-        protected static bool IsDigit(char ch)
+        public static bool IsDigit(char ch)
         {
             return ch >= '0' && ch <= '9';
         }

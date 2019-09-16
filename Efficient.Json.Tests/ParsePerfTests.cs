@@ -23,8 +23,8 @@ namespace Efficient.Json.Tests
         {
             get
             {
-                string root = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-                return Path.Combine(root, "Assets", "baby-names.json");
+                string root = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                return System.IO.Path.Combine(root, "Assets", "baby-names.json");
             }
         }
 

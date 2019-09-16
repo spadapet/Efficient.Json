@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Globalization;
 using System.IO;
+using System.Linq;
 using System.Linq.Expressions;
 using Efficient.Json.Itemizing;
 using Efficient.Json.Parsing;
+using Efficient.Json.Path;
 using Efficient.Json.Serializing;
 using Efficient.Json.Tokenizing;
 using Efficient.Json.Tokens;
@@ -153,6 +155,9 @@ namespace Efficient.Json
             }
         }
 
+        ////////////////////////////////////////
+        // Collection implementations
+
         IEnumerator IEnumerable.GetEnumerator()
         {
             IEnumerator enumerator;
@@ -185,6 +190,20 @@ namespace Efficient.Json
         int IReadOnlyCollection<JsonValue>.Count => this.List.Array.Count;
         JsonValue IReadOnlyDictionary<string, JsonValue>.this[string key] => this.List.Dictionary[key];
         JsonValue IReadOnlyList<JsonValue>.this[int index] => this.List.Array[index];
+
+        ////////////////////////////////////////
+        // JSON Path
+
+        public IEnumerable<JsonValue> Select(string path)
+        {
+            Query query = this.Context.GetQuery(path);
+            return query.Select(this);
+        }
+
+        public JsonValue SelectOne(string path) => JsonException.Wrap(() =>
+        {
+            return this.Select(path).Single();
+        });
 
         ////////////////////////////////////////
         // ValueToString
@@ -355,6 +374,9 @@ namespace Efficient.Json
 
             return !value.IsNull ? value : null;
         }
+
+        ////////////////////////////////////////
+        // Debug
 
         private class DebuggerView
         {
