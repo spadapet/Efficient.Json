@@ -49,22 +49,6 @@ namespace Efficient.Json.Path
                     }
                     break;
 
-                case '@':
-                case '$':
-                    switch (this.Peek())
-                    {
-                        case '.':
-                        case '[':
-                            _ = this.NextChar();
-                            type = (ch == '@') ? QueryTokenType.AtRef : QueryTokenType.DollarRef;
-                            break;
-
-                        default:
-                            type = this.SkipIdentifier();
-                            break;
-                    }
-                    break;
-
                 case '-':
                 case '0':
                 case '1':
@@ -210,29 +194,12 @@ namespace Efficient.Json.Path
 
         private static bool IsIdentifierStart(char ch)
         {
-            switch (ch)
-            {
-                case '_':
-                case '$':
-                case '@':
-                case '%':
-                    return true;
-
-                default:
-                    return char.IsLetter(ch);
-            }
+            return ch == '_' || char.IsLetter(ch);
         }
 
         private static bool IsIdentifier(char ch)
         {
-            switch (ch)
-            {
-                case '-':
-                    return true;
-
-                default:
-                    return QueryTokenizer.IsIdentifierStart(ch) || char.IsDigit(ch);
-            }
+            return ch == '-' || QueryTokenizer.IsIdentifierStart(ch) || char.IsDigit(ch);
         }
 
         private QueryTokenType SkipIdentifier()

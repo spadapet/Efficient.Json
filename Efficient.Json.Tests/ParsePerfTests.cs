@@ -162,7 +162,6 @@ namespace Efficient.Json.Tests
             return hash;
         }
 
-#if NET_CORE_3
         private static int GetDeepHashCode(System.Text.Json.JsonElement value)
         {
             int hash = 0;
@@ -171,14 +170,14 @@ namespace Efficient.Json.Tests
             {
                 foreach (System.Text.Json.JsonElement child in value.EnumerateArray())
                 {
-                    hash ^= JsonPerfTests.GetDeepHashCode(child);
+                    hash ^= ParsePerfTests.GetDeepHashCode(child);
                 }
             }
             else if (value.ValueKind == System.Text.Json.JsonValueKind.Object)
             {
                 foreach (System.Text.Json.JsonProperty pair in value.EnumerateObject())
                 {
-                    hash ^= JsonPerfTests.GetDeepHashCode(pair.Value);
+                    hash ^= ParsePerfTests.GetDeepHashCode(pair.Value);
                 }
             }
             else if (value.ValueKind == System.Text.Json.JsonValueKind.False ||
@@ -197,7 +196,6 @@ namespace Efficient.Json.Tests
 
             return hash;
         }
-#endif
 
         [Fact]
         public void LargeFileEfficient()
@@ -275,24 +273,22 @@ namespace Efficient.Json.Tests
                 ParsePerfTests.GetDeepHashCode);
         }
 
-#if NET_CORE_3
         [Fact]
         public void LargeFileSystemTextJson()
         {
             this.ReadFileTestPerf(
-                JsonPerfTests.LargeFileName,
+                ParsePerfTests.LargeFileName,
                 s => System.Text.Json.JsonDocument.Parse(s),
-                d => JsonPerfTests.GetDeepHashCode(d.RootElement));
+                d => ParsePerfTests.GetDeepHashCode(d.RootElement));
         }
 
         [Fact]
         public void StreamLargeFileSystemTextJson()
         {
             this.StreamFileTestPerf(
-                JsonPerfTests.LargeFileName,
+                ParsePerfTests.LargeFileName,
                 s => System.Text.Json.JsonDocument.Parse(s),
-                d => JsonPerfTests.GetDeepHashCode(d.RootElement));
+                d => ParsePerfTests.GetDeepHashCode(d.RootElement));
         }
-#endif
     }
 }

@@ -11,14 +11,14 @@
         Number,
 
         And, // &&
-        AtRef, // @ (before @.foo or @[...])
+        At, // @
         Bang, // !
         BangEqual, // !=
         CloseBracket, // ]
         CloseParen, // )
         Colon, // :
         Comma, // ,
-        DollarRef, // $ (before $.foo or $[...])
+        Dollar, // $
         Dot, // .
         DotDot, // ..
         Equal, // ==
