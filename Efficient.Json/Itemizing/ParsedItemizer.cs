@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using Efficient.Json.Tokens;
+﻿using Efficient.Json.Tokens;
 using Efficient.Json.Utility;
+using System.Collections.Generic;
 
 namespace Efficient.Json.Itemizing
 {

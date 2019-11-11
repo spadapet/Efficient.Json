@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Efficient.Json.Utility;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
-using Efficient.Json.Utility;
 
 namespace Efficient.Json.Reflection
 {

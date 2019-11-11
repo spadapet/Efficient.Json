@@ -1,6 +1,6 @@
-﻿using System.IO;
+﻿using Efficient.Json.Tokens;
+using System.IO;
 using System.Text;
-using Efficient.Json.Tokens;
 
 namespace Efficient.Json.Tokenizing
 {

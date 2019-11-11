@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using Efficient.Json.Utility;
+﻿using Efficient.Json.Utility;
+using System.Diagnostics;
 
 namespace Efficient.Json.Tokens
 {

@@ -1,19 +1,19 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Efficient.Json.Path
 {
+    [SuppressMessage("Style", "IDE0060:Remove unused parameter", Justification = "Not implemented yet")]
     internal class Query
     {
-        private string path;
-
         public Query(string path)
         {
-            this.path = path;
         }
 
         public IEnumerable<JsonValue> Select(JsonValue root)
         {
-            yield break;
+            throw new NotImplementedException(Resources.Query_NotImplemented);
         }
     }
 }

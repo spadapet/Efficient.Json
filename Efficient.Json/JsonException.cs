@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Efficient.Json.Tokens;
+using System;
 using System.Globalization;
-using Efficient.Json.Tokens;
 
 namespace Efficient.Json
 {

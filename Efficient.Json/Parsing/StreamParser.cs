@@ -1,6 +1,6 @@
-﻿using System.IO;
-using Efficient.Json.Itemizing;
+﻿using Efficient.Json.Itemizing;
 using Efficient.Json.Tokenizing;
+using System.IO;
 
 namespace Efficient.Json.Parsing
 {

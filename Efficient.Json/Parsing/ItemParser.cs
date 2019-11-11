@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Text;
-using Efficient.Json.Itemizing;
+﻿using Efficient.Json.Itemizing;
 using Efficient.Json.Tokens;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Efficient.Json.Parsing
 {

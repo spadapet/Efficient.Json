@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Efficient.Json.Utility;
+using System;
 using System.Linq.Expressions;
-using Efficient.Json.Utility;
 
 namespace Efficient.Json.Reflection
 {

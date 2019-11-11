@@ -178,6 +178,15 @@ namespace Efficient.Json {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to JSON Path support is not implemented.
+        /// </summary>
+        internal static string Query_NotImplemented {
+            get {
+                return ResourceManager.GetString("Query.NotImplemented", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to parse number &apos;{0}&apos;.
         /// </summary>
         internal static string Value_BadNumber {

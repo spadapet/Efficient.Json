@@ -1,7 +1,7 @@
-﻿using System.Globalization;
+﻿using Efficient.Json.Tokens;
+using System.Globalization;
 using System.IO;
 using System.Text;
-using Efficient.Json.Tokens;
 
 namespace Efficient.Json.Utility
 {

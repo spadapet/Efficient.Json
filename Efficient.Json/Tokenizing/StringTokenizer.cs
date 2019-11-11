@@ -1,5 +1,5 @@
-﻿using System.Text;
-using Efficient.Json.Tokens;
+﻿using Efficient.Json.Tokens;
+using System.Text;
 
 namespace Efficient.Json.Tokenizing
 {

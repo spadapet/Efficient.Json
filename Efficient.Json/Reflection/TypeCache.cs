@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Efficient.Json.Utility;
+using System;
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using Efficient.Json.Utility;
 
 namespace Efficient.Json.Reflection
 {

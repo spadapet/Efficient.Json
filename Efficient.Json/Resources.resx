@@ -156,6 +156,9 @@
   <data name="Parser.UnexpectedValue" xml:space="preserve">
     <value>Not expecting a value</value>
   </data>
+  <data name="Query.NotImplemented" xml:space="preserve">
+    <value>JSON Path support is not implemented</value>
+  </data>
   <data name="Value.BadNumber" xml:space="preserve">
     <value>Failed to parse number '{0}'</value>
   </data>

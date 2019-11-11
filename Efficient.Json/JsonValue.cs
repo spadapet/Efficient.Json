@@ -1,4 +1,12 @@
-﻿using System;
+﻿using Efficient.Json.Itemizing;
+using Efficient.Json.Parsing;
+using Efficient.Json.Path;
+using Efficient.Json.Serializing;
+using Efficient.Json.Tokenizing;
+using Efficient.Json.Tokens;
+using Efficient.Json.Utility;
+using Efficient.Json.Value;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -7,14 +15,6 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
-using Efficient.Json.Itemizing;
-using Efficient.Json.Parsing;
-using Efficient.Json.Path;
-using Efficient.Json.Serializing;
-using Efficient.Json.Tokenizing;
-using Efficient.Json.Tokens;
-using Efficient.Json.Utility;
-using Efficient.Json.Value;
 
 namespace Efficient.Json
 {

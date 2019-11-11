@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Efficient.Json.Itemizing;
+using Efficient.Json.Utility;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using Efficient.Json.Itemizing;
-using Efficient.Json.Utility;
 
 namespace Efficient.Json.Serializing
 {

@@ -1,7 +1,7 @@
-﻿using System.Diagnostics;
-using System.Text;
-using Efficient.Json.Tokens;
+﻿using Efficient.Json.Tokens;
 using Efficient.Json.Utility;
+using System.Diagnostics;
+using System.Text;
 
 namespace Efficient.Json.Tokenizing
 {
